@@ -15,7 +15,11 @@ public class UploadController {
     @RequestMapping("/uploadImage")
     public ModelAndView upload(HttpServletRequest request, UploadedImageFile file) throws IOException {
         String name = RandomStringUtils.randomAlphanumeric(10);
-        String newFileName = name + ".jpg";
+
+        String clientFileName = file.getImage().getOriginalFilename();
+        String suffix = clientFileName.substring(clientFileName.lastIndexOf('.'));
+
+        String newFileName = name + suffix;
         File newFile = new File(request.getServletContext().getRealPath("/image"),newFileName);
         newFile.getParentFile().mkdirs();
 
